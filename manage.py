@@ -13,21 +13,19 @@ try:
     commands = reader.split('**')
     for command in commands:
         cursor.execute(command)
+
+
+    # open seeding file and add records
+    ff = open("seeder.sql","r")
+    seeder_reader = str(ff.read())
+    seeder_commands = seeder_reader.split('**')
+    for command in seeder_commands:
+        cursor.execute(command)
+
+
     cursor.close()
     #commit the changes
     connection.commit()
-
-
-
-
-
-#     # Print PostgreSQL Connection properties
-#     print ( connection.get_dsn_parameters(),"\n")
-
-#     # Print PostgreSQL version
-#     cursor.execute("SELECT version();")
-#     record = cursor.fetchone()
-#     print("You are connected to - ", record,"\n")
 
 except (Exception, psycopg2.Error) as error :
     print ("Error while connecting to PostgreSQL", error)
